@@ -27,7 +27,6 @@ int userAlreadyExists(int id)
             return 1;
         }
     }
-
     fclose(f_ptr);
     return 0;
 }
@@ -38,14 +37,14 @@ void createUser()
     FILE *f_ptr = fopen(FILE_NAME, "a+");
     if (!f_ptr)
     {
-        printf("File cannot be opened");
+        printf("File cannot be opened\n");
         return;
     }
 
     User user;
     printf("Enter User ID: ");
     scanf("%d", &user.id);
-    
+
     if (userAlreadyExists(user.id))
     {
         printf("ID: %d user already exists.\n", user.id);
@@ -60,7 +59,6 @@ void createUser()
 
     fprintf(f_ptr, "%d %s %d\n", user.id, user.name, user.age);
     printf("User added successfully.\n");
-
     fclose(f_ptr);
 }
 
@@ -70,37 +68,42 @@ void readUsers()
     FILE *f_ptr = fopen(FILE_NAME, "r");
     if (!f_ptr)
     {
-        printf("File cannot be opened");
+        printf("File cannot be opened\n");
         return;
     }
 
     User user;
     printf("\n%-10s %-20s %-10s\n", "User ID", "User Name", "User Age");
-
     while (fscanf(f_ptr, "%d %29s %d", &user.id, user.name, &user.age) == 3)
     {
         printf("%-10d %-20s %-10d\n", user.id, user.name, user.age);
     }
-
     fclose(f_ptr);
 }
 
 // UPDATE USER
 void updateUser()
 {
-    int id, found = 0;
+    int id;
     printf("Enter User ID you wish to update: ");
-    scanf("%d", &id);
-    
+    if (scanf("%d", &id) != 1)
+    {
+        while (getchar() != '\n')
+            ; 
+        printf("Invalid input.\n");
+        return; 
+    }
+
     FILE *f_ptr = fopen(FILE_NAME, "r");
     FILE *tempF = fopen("temp.txt", "w");
     if (!f_ptr || !tempF)
     {
-        printf("Error occurred in file");
+        printf("Error opening file\n");
         return;
     }
 
     User user;
+    int found = 0;
     while (fscanf(f_ptr, "%d %29s %d", &user.id, user.name, &user.age) == 3)
     {
         if (user.id == id)
@@ -133,25 +136,32 @@ void updateUser()
 // DELETE USER
 void deleteUser()
 {
-    int id, found = 0;
+    int id;
     printf("Enter User ID you wish to delete: ");
-    scanf("%d", &id);
+    if (scanf("%d", &id) != 1)
+    {
+        while (getchar() != '\n')
+            ;
+        printf("Invalid input.\n");
+        return; 
+    }
 
     FILE *f_ptr = fopen(FILE_NAME, "r");
     FILE *tempF = fopen("temp.txt", "w");
     if (!f_ptr || !tempF)
     {
-        printf("Error occurred in file");
+        printf("Error opening file\n");
         return;
     }
 
     User user;
+    int found = 0;
     while (fscanf(f_ptr, "%d %29s %d", &user.id, user.name, &user.age) == 3)
     {
         if (user.id == id)
         {
             found = 1;
-            continue; // skipping will delete the user from file
+            continue; // skipping the user to delete
         }
         fprintf(tempF, "%d %s %d\n", user.id, user.name, user.age);
     }
@@ -175,7 +185,6 @@ void deleteUser()
 int main()
 {
     int choice;
-
     while (1)
     {
         printf("\nUser Management System\n");
