@@ -11,7 +11,6 @@ typedef struct
     int age;
 } User;
 
-// Checking if User Already Exists
 int userAlreadyExists(int id)
 {
     FILE *f_ptr = fopen(FILE_NAME, "r");
@@ -31,7 +30,6 @@ int userAlreadyExists(int id)
     return 0;
 }
 
-// CREATE USER
 void createUser()
 {
     FILE *f_ptr = fopen(FILE_NAME, "a+");
@@ -62,7 +60,6 @@ void createUser()
     fclose(f_ptr);
 }
 
-// DISPLAY USERS
 void readUsers()
 {
     FILE *f_ptr = fopen(FILE_NAME, "r");
@@ -81,7 +78,6 @@ void readUsers()
     fclose(f_ptr);
 }
 
-// UPDATE USER
 void updateUser()
 {
     int id;
@@ -133,7 +129,6 @@ void updateUser()
     }
 }
 
-// DELETE USER
 void deleteUser()
 {
     int id;
