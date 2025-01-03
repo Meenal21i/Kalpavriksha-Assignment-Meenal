@@ -23,7 +23,7 @@ int longestWord(char sentence[])
             if (wordLength > longestLength)
             {
                 longestLength = wordLength;
-                printf("%d", longestLength);
+                
             }
             wordLength = 0;
         }
