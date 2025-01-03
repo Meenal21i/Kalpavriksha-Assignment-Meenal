@@ -13,7 +13,7 @@ int spaceCheck(int space) {
     if (space == ' ') {return 1;}
     return 0;
 }
-char * search_char(const char * str, char ch) {
+char * searchChar(const char * str, char ch) {
     for(int i=0; i<strlen(str); i++) {
         if(str[i] == ch) {return (char*)str;}
     }
@@ -25,25 +25,25 @@ int operatorCheck(char ch) {
 }
 
 
-int applyOperation(int a, int b, char op) {
-    switch (op) {
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
+int applyOperation(int operand1, int operand2, char operator) {
+    switch (operator) {
+        case '+': return operand1 + operand2;
+        case '-': return operand1 - operand2;
+        case '*': return operand1 * operand2;
         case '/': 
-            if (b == 0) { 
+            if (operand2 == 0) { 
                 printf("Error: Division by zero.\n"); 
                 return -1;
             }
-            return a / b;
+            return operand1 / operand2;
         default: return 0;
     }
 }
 
-int solve(char str[], int n) {
-    for(int i=n-1, j=0; i>=0, j<n; i--, j++) {
-        if(spaceCheck(str[i]) || spaceCheck(str[j])){ continue;}
-        else if(operatorCheck(str[i]) || operatorCheck(str[j])) {
+int solve(char str[], int size) {
+    for(int start=size-1, end=0; start>=0, end<size; start--, end++) {
+        if(spaceCheck(str[start]) || spaceCheck(str[end])){ continue;}
+        else if(operatorCheck(str[start]) || operatorCheck(str[end])) {
             printf("Invalid Expression\n");
             return -1;
         }
@@ -52,58 +52,58 @@ int solve(char str[], int n) {
     
     
     int stack[MAX], top = -1, num = 0;
-    char op = '+';
+    char operator = '+';
 
-    for (int i = 0; i < n; i++) {
-        if (spaceCheck(str[i])) continue; 
+    for (int index = 0; index < size; index++) {
+        if (spaceCheck(str[index])) continue; 
 
-        if (digitCheck(str[i])) {
-            num = num * 10 + (str[i] - '0');
+        if (digitCheck(str[index])) {
+            num = num * 10 + (str[index] - '0');
         } 
 
-        if (str[i] == '-' && (i == 0 || search_char("+-*/", str[i - 1]))) {
+        if (str[index] == '-' && (index == 0 || searchChar("+-*/", str[index - 1]))) {
             op = '-'; 
             continue; 
         }
         
-        if (!digitCheck(str[i]) && !spaceCheck(str[i]) && !search_char("+-*/", str[i])) {
+        if (!digitCheck(str[index]) && !spaceCheck(str[index]) && !searchChar("+-*/", str[index])) {
             printf("Invalid expression\n");
             return -1;
         }
         
-        for(int i=0; i<n-1; i++){
-            if((operatorCheck(str[i]) && operatorCheck(str[i+1])) ){
+        for(int index=0; index<size-1; index++){
+            if((operatorCheck(str[index]) && operatorCheck(str[index+1])) ){
                 printf( "Invalid expression\n");
                 return -1;
             }
         }
 
         
-        if (!digitCheck(str[i]) || i == n - 1) {
-            if (op == '+') stack[++top] = num;
-            else if (op == '-') stack[++top] = -num;
-            else if (op == '*') stack[top] *= num;
-            else if (op == '/') {
+        if (!digitCheck(str[index]) || index == size - 1) {
+            if (operator == '+') stack[++top] = num;
+            else if (operator == '-') stack[++top] = -num;
+            else if (operator == '*') stack[top] *= num;
+            else if (operator == '/') {
                 if (num == 0) {
                     printf("Division by zero Error.\n");
                     return -1;
                 }
                 stack[top] /= num;
             }
-            op = str[i];
+            operator = str[index];
             num = 0;
         }
     }
 
     int result = 0;
-    for (int i = 0; i <= top; i++) result += stack[i];
+    for (int index = 0; index <= top; index++) result += stack[i];
     printf("Result: %d\n", result);
 }
 
 int main() {
-    char math_exp[MAX];
+    char mathExpression[MAX];
     printf("Enter a mathematical expression: ");
     scanf("%[^\n]%*c", math_exp);
-    solve(math_exp, strlen(math_exp));
+    solve(mathExpression, strlen(mathExpression));
     return 0;
 }
