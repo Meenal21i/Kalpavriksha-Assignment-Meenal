@@ -32,8 +32,10 @@ int main() {
         }
     }
     
-    char *longestName = matrix[0][0];
-    int vowelWordCount = 0;
+    char **longestName = (char **)malloc(rowSize * colSize * sizeof(char *));
+    
+    // char longestName[100];
+    int vowelWordCount = 0, countLongestName=0, currMaxLength=0;
     
     printf("Enter the names:\n");
     for(int row=0; row<rowSize; row++) {
@@ -43,8 +45,14 @@ int main() {
             if(firstCharVowel(matrix[row][col][0])){
                 vowelWordCount++;
             }
-            if(strlen(matrix[row][col]) > strlen(longestName)) {
-                longestName = matrix[row][col];
+            if(strlen(matrix[row][col]) > currMaxLength) {
+                currMaxLength = strlen(matrix[row][col]);
+                countLongestName=0;
+                longestName[countLongestName] = matrix[row][col];
+            }
+            if(strlen(matrix[row][col]) == currMaxLength){
+                longestName[countLongestName] = matrix[row][col];
+                countLongestName++;
             }
         }
     }
@@ -58,7 +66,10 @@ int main() {
     }
     
     printf("Number of names starting with a vowel: %d\n", vowelWordCount);
-    printf("The longest name: %s", longestName);
+    printf("The longest name: ");
+    for(int index=0; index<countLongestName; index++) {
+        printf("%s ", longestName[index]);
+    }
     
     for(int row=0; row<rowSize; row++) {
         for(int col=0; col<colSize; col++){
