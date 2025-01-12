@@ -63,10 +63,6 @@ void groupAnagrams(char **arr, int size)
 
 int main()
 {
-    // char *str[] = {"eat", "tea", "tan", "bat", "ate", "tab"};
-    // int size = sizeof(str) / sizeof(str[0]);
-    // groupAnagrams(str, size);
-
     int size;
     scanf("%d", &size);
 
