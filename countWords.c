@@ -14,31 +14,29 @@ Output: 4
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int countWords(char *s)
+int countWords(char *sentence)
 {
-    int i = 0, wordCount = 0;
-    while (s[i] != '\0')
+    int letter = 0, wordCount = 0;
+    while (sentence[letter] != '\0')
     {
         int flag = 0;
-        while ((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z'))
+        while ((sentence[letter] >= 'a' && sentence[letter] <= 'z') || (sentence[letter] >= 'A' && sentence[letter] <= 'Z'))
         {
             flag = 1;
-            i++;
+            letter++;
         }
         if (flag == 1)
             wordCount++;
 
-        while (s[i] != '\0' && !((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')))
+        while (sentence[letter] != '\0' && !((sentence[letter] >= 'a' && sentence[letter] <= 'z') || (sentence[letter] >= 'A' && sentence[letter] <= 'Z')))
         {
-            i++;
+            letter++;
         }
     }
     return wordCount;
 }
 int main()
 {
-    // char string[100];
-    // scanf("%[^\n]", string);
 
     char *string = (char *)malloc(100 * sizeof(char));
     scanf("%[^\n]", string);
