@@ -15,32 +15,46 @@ Output: false
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-// APPROACH 1:
+
+int stringCompare(char *string1, char*string2){
+     int i = 0, flag = 0;    
+    while (flag == 0) {
+        if (string1[i] != string2[i]) {
+            flag = 1;
+        } 
+        if (string1[i] == '\0')
+        {
+            break;
+        }
+        i++;
+    }
+    return flag;
+}
 bool checkRotation(char *str1, char *str2)
 {
-    int n = strlen(str2);
+    int len2 = strlen(str2);
     char *str3 = (char *)malloc(100 * sizeof(char));
-    int d = 0;
-    while (d < n)
+    int pivot = 0;
+    while (pivot < len2)
     {
         int s3index = 0;
 
-        for (int i = d; i < n; i++)
+        for (int s2index = pivot; s2index < len2; s2index++)
         {
-            str3[s3index++] = str2[i];
+            str3[s3index++] = str2[s2index];
         }
-        for (int i = 0; i < d; i++)
+        for (int s2index = 0; s2index < pivot; s2index++)
         {
-            str3[s3index++] = str2[i];
+            str3[s3index++] = str2[s2index];
         }
         str3[s3index] = '\0';
-        if (strcmp(str3, str1) == 0)
+        if (stringCompare(str3, str1) == 0)
         {
             free(str3);
             return true;
         }
 
-        d++;
+        pivot++;
     }
     free(str3);
     return false;
@@ -48,9 +62,6 @@ bool checkRotation(char *str1, char *str2)
 
 int main()
 {
-    // char string[100];
-    // scanf("%[^\n]", string);
-
     char *string1 = (char *)malloc(100 * sizeof(char));
     scanf("%[^\n]", string1);
     getchar();
@@ -75,97 +86,3 @@ int main()
     free(string2);
     return 0;
 }
-
-
-// APPROACH 2:
-// void stringCopy(char dest[], const char source[])
-// {
-//     int i = 0;
-//     while (1)
-//     {
-//         dest[i] = source[i];
-//         if (dest[i] == '\0')
-//         {
-//             break;
-//         }
-//         i++;
-//     }
-// }
-// char *stringConcat(char *dest, const char *src)
-// {
-//     size_t i, j;
-//     for (i = 0; dest[i] != '\0'; i++)
-//         ;
-//     for (j = 0; src[j] != '\0'; j++)
-//         dest[i + j] = src[j];
-//     dest[i + j] = '\0';
-//     return dest;
-// }
-// int checkSubstring(char *str, char *substr)
-// {
-//     int i = 0, j = 0;
-//     while (str[i] != '\0' && substr[j] != '\0')
-//     {
-//         if (str[i] == substr[j])
-//         {
-//             i++;
-//             j++;
-//             if (substr[j] == '\0')
-//             {
-//                 return i - j;
-//             }
-//         }
-//         else
-//         {
-//             j = 0;
-//             i = i - j + 1;
-//         }
-//     }
-//     return -1;
-// }
-// bool checkRotation(char *str1, char *str2)
-// {
-
-//     int len2 = strlen(str2);
-//     char *str3 = (char *)malloc(2 * len2 * sizeof(char));
-
-//     stringCopy(str3, str2);
-//     stringConcat(str3, str2);
-
-//     if (checkSubstring(str3, str1) != -1)
-//     {
-//         return true;
-//     }
-//     else
-//     {
-//         return false;
-//     }
-// }
-// int main()
-// {
-//     // char string[100];
-//     // scanf("%[^\n]", string);
-
-//     char *string1 = (char *)malloc(100 * sizeof(char));
-//     scanf("%[^\n]", string1);
-//     getchar();
-//     char *string2 = (char *)malloc(100 * sizeof(char));
-//     scanf("%[^\n]", string2);
-
-//     if (strlen(string1) != strlen(string2))
-//         printf("false");
-//     return 0;
-
-//     if (checkRotation(string1, string2))
-//     {
-//         printf("true");
-//     }
-//     else
-//     {
-//         printf("false");
-//     }
-
-//     free(string1);
-//     free(string2);
-//     return 0;
-// }
