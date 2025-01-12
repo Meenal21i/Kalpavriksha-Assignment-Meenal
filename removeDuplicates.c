@@ -15,31 +15,29 @@ Output: "abcd"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void removeDuplicates(char *str)
+void removeDuplicates(char *string)
 {
-    int hash[26] = {0};
-    int i = 0;
-    while (str[i] != '\0')
+    int *hash = (int *)calloc(26, sizeof(int));
+    int character = 0;
+    while (string[character] != '\0')
     {
-        hash[str[i] - 'a']++;
-        i++;
+        hash[string[character] - 'a']++;
+        character++;
     }
-    i = 0;
-    while (str[i] != '\0')
+    character = 0;
+    while (string[character] != '\0')
     {
-        if (hash[str[i] - 'a'] != 0)
+        if (hash[string[character] - 'a'] != 0)
         {
-            printf("%c", str[i]);
-            hash[str[i] - 'a'] = 0;
+            printf("%c", string[character]);
+            hash[string[character] - 'a'] = 0;
         }
-        i++;
+        character++;
     }
+    free(hash);
 }
 int main()
 {
-    // char string[100];
-    // scanf("%[^\n]", string);
-
     char *string = (char *)malloc(100 * sizeof(char));
     scanf("%[^\n]", string);
 
