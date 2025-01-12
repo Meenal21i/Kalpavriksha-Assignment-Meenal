@@ -4,27 +4,24 @@
 #include <stdbool.h>
 #define MaxSize 100
 
-
-bool isAnagram(char s1[], char s2[])
-{
-    int hash[26] = {0};
-
-    for (int i = 0; s1[i] != '\0'; i++)
-    {
-        hash[s1[i] - 'a']++;
+bool isAnagram(char *str1, char *str2) {
+    
+    int len1=0, len2=0;
+    while(str1[len1] != '\0') len1++;
+    while(str2[len2] != '\0') len2++;
+    
+    if(len1 != len2) return false;
+    
+    int *hash = (int *)calloc(26, sizeof(int));
+    for(int index=0; str1[index] != '\0'; index++) {
+        hash[str1[index] - 'a']++;
+        hash[str2[index] - 'a']--;
     }
-    for (int i = 0; s2[i] != '\0'; i++)
-    {
-        hash[s2[i] - 'a']--;
+    for(int index=0; index<26; index++) {
+        if(hash[index] != 0 ) return false;
     }
-    for (int i = 0; i < 26; i++)
-    {
-        if (hash[i] != 0)
-        {
-            return false;
-        }
-    }
-    return true; 
+    free(hash);
+    return true;
 }
 
 
@@ -34,22 +31,22 @@ void groupAnagrams(char **arr, int size)
     bool firstGroup = true;
 
     printf("[");
-    for (int i = 0; i < size; i++)
+    for (int word = 0; word < size; word++)
     {
-        if (!grouped[i])
+        if (!grouped[word])
         {
             if (!firstGroup)
             {
                 printf(", ");
             }
-            printf("[\"%s\"", arr[i]);
-            grouped[i] = true;
-            for (int j = i + 1; j < size; j++)
+            printf("[\"%s\"", arr[word]);
+            grouped[word] = true;
+            for (int secondWord = word + 1; secondWord < size; secondWord++)
             {
-                if (isAnagram(arr[i], arr[j]))
+                if (isAnagram(arr[word], arr[secondWord]))
                 {
-                    printf(", \"%s\"", arr[j]);
-                    grouped[j] = true;
+                    printf(", \"%s\"", arr[secondWord]);
+                    grouped[secondWord] = true;
                 }
             }
             printf("]");
@@ -66,23 +63,23 @@ int main()
     int size;
     scanf("%d", &size);
 
-    char **str = (char **)malloc(size * sizeof(char *));
-    for (int i = 0; i < size; i++)
+    char **string = (char **)malloc(size * sizeof(char *));
+    for (int words = 0; words < size; words++)
     {
-        str[i] = (char *)malloc(MaxSize * sizeof(char));
+        string[words] = (char *)malloc(MaxSize * sizeof(char));
     }
-    for (int i = 0; i < size; i++)
+    for (int words = 0; words < size; words++)
     {
-        scanf("%s", str[i]);
+        scanf("%s", string[words]);
     }
 
-    groupAnagrams(str, size);
+    groupAnagrams(string, size);
 
-    for (int i = 0; i < size; i++)
+    for (int words = 0; words < size; words++)
     {
-        free(str[i]); 
+        free(string[words]); 
     }
-    free(str);
+    free(string);
 
     return 0;
 }
