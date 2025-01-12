@@ -16,31 +16,28 @@ Output: -1
 #include <string.h>
 int checkSubstring(char *str, char *substr)
 {
-    int i = 0, j = 0;
-    while (str[i] != '\0' && substr[j] != '\0')
+    int strIndex = 0, substrIndex = 0;
+    while (str[strIndex] != '\0' && substr[substrIndex] != '\0')
     {
-        if (str[i] == substr[j])
+        if (str[strIndex] == substr[substrIndex])
         {
-            i++;
-            j++;
-            if (substr[j] == '\0')
+            strIndex++;
+            substrIndex++;
+            if (substr[substrIndex] == '\0')
             {
-                return i - j;
+                return strIndex - substrIndex;
             }
         }
         else
         {
-            j = 0;
-            i = i - j + 1;
+            substrIndex = 0;
+            strIndex = strIndex - substrIndex + 1;
         }
     }
     return -1;
 }
 int main()
 {
-    // char string[100];
-    // scanf("%[^\n]", string);
-
     char *string = (char *)malloc(100 * sizeof(char));
     scanf("%[^\n]", string);
     getchar();
