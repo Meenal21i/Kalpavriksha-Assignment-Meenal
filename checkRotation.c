@@ -17,16 +17,16 @@ Output: false
 #include <stdbool.h>
 
 int stringCompare(char *string1, char*string2){
-     int i = 0, flag = 0;    
+     int index = 0, flag = 0;    
     while (flag == 0) {
-        if (string1[i] != string2[i]) {
+        if (string1[index] != string2[index]) {
             flag = 1;
         } 
-        if (string1[i] == '\0')
+        if (string1[index] == '\0')
         {
             break;
         }
-        i++;
+        index++;
     }
     return flag;
 }
