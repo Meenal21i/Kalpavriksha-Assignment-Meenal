@@ -1,33 +1,33 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-int charInStr(char ch, char*str)
+int charInStr(char ch, char* word)
 {
-    for(int i=0; i<strlen(str); i++)
+    for(int letter=0; letter<strlen(word); letter++)
     {
-        if(ch == str[i]) return 1;
+        if(ch == word[letter]) return 1;
     }
     return 0;
 }
-int maxLen(char** string, int n)
+int maxLen(char** string, int numOfWords)
 {
     int len=0, maxl=0;
-    for(int i=0; i<n-1; i++)
+    for(int word1=0; word1<numOfWords-1; word1++)
     {
-        for(int j=i+1; j<n; j++)
+        for(int word2=word1+1; word2<numOfWords; word2++)
         {
             int found = 0;
 
-            for(int k=0; k<strlen(string[i]); k++)
+            for(int letter=0; letter<strlen(string[word1]); letter++)
             {
-                if(charInStr(string[i][k], string[j])==1){
+                if(charInStr(string[word1][letter], string[word2])==1){
                     found = 1;
                     break;
                 }
                 
             }
             if(found==0){
-                len = (strlen(string[i]) * strlen(string[j]));
+                len = (strlen(string[word1]) * strlen(string[word2]));
                 if(maxl < len) maxl = len;
             }
         }
