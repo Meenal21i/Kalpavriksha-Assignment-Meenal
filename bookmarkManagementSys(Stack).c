@@ -22,10 +22,15 @@ void pop(stack *s, int *hash) {
     hash[val]=0;
 }
 void display(int *hash) {
+    int flag=0;
     for(int i=1; i<=1000; i++) {
         if(hash[i]>0){
+            flag=1;
             printf("%d ", i);
         }
+    }
+    if (flag==0){
+        printf("No bookmarks added\n");
     }
 }
 int main(){
