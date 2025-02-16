@@ -22,7 +22,7 @@ int longestSubstrExactKChar(char *str, int n, int k) {
         }
         i++;
     }
-
+    if(maxLen > n) return -1;
     return maxLen;
 }
 int main() {
